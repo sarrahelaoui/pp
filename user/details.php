@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>computer Shop </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="assets/img/apple-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/templatemo.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+
+   
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+
+</head>
+
+<body>
+    <!-- Start Top Nav -->
+    <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
+        <div class="container text-light">
+            <div class="w-100 d-flex justify-content-between">
+                <div>
+                    <i class="fa fa-envelope mx-2"></i>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:info@company.com">info@company.com</a>
+                    <i class="fa fa-phone mx-2"></i>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+                </div>
+                <div>
+                    <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://twitter.com/" target="_blank"><i class="fab fa-twitter fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin fa-sm fa-fw"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Close Top Nav -->
+
+
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-light shadow">
+        <div class="container d-flex justify-content-between align-items-center">
+
+            <a class="navbar-brand text-success logo h1 align-self-center" href="index.html">
+               computer
+            </a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
+                <div class="flex-fill">
+                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="produits.php">Explore</a>
+                        </li>
+                      
+                    </ul>
+                </div>
+                <div class="navbar align-self-center d-flex">
+                    <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
+                            <div class="input-group-text">
+                                <i class="fa fa-fw fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
+                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
+                    </a>
+                   
+                  
+                </div>
+            </div>
+
+        </div>
+    </nav>
+    <!-- Close Header -->
+
+    <!-- Modal -->
+    <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="w-100 pt-1 mb-5 text-right">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method="get" class="modal-content modal-body border-0 p-0">
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Search ...">
+                    <button type="submit" class="input-group-text bg-success text-light">
+                        <i class="fa fa-fw fa-search text-white"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+<?php
+include '../computer/db.php';
+
+// check id
+if (!isset($_GET['id'])) {
+    echo "Produit non trouvé";
+    exit;
+}
+
+$id = intval($_GET['id']);
+
+// get product
+$result = $conn->query("SELECT * FROM produits WHERE id = $id");
+
+if ($result->num_rows == 0) {
+    echo "Produit introuvable";
+    exit;
+}
+
+$product = $result->fetch_assoc();
+?>
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Détails Produit</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<section class="bg-light">
+<div class="container py-5">
+<div class="row">
+
+    <!-- IMAGE -->
+    <div class="col-lg-5">
+        <div class="card mb-3">
+            <?php if (!empty($product['image'])): ?>
+                <img class="card-img img-fluid"
+                     src="../computer/uploads/<?= htmlspecialchars($product['image']) ?>">
+            <?php else: ?>
+                <div style="height:300px;background:#eee;display:flex;align-items:center;justify-content:center;">
+                    No Image
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+
+    <!-- DETAILS -->
+    <div class="col-lg-7">
+        <div class="card">
+        <div class="card-body">
+
+            <h1 class="h2"><?= htmlspecialchars($product['ModelName']) ?></h1>
+
+            <p class="h3 text-success"><?= $product['prix'] ?> DT</p>
+
+            <ul class="list-inline">
+                <li class="list-inline-item"><strong>Brand:</strong></li>
+                <li class="list-inline-item text-muted">
+                    <?= htmlspecialchars($product['Manufacturer']) ?>
+                </li>
+            </ul>
+
+            <h5>Description</h5>
+            <p>
+                <?= htmlspecialchars($product['Category']) ?> laptop with powerful performance.
+            </p>
+
+            <h5>Specifications</h5>
+            <ul>
+                <li><strong>CPU:</strong> <?= $product['cpu'] ?></li>
+                <li><strong>RAM:</strong> <?= $product['ram'] ?></li>
+                <li><strong>Storage:</strong> <?= $product['storage'] ?></li>
+                <li><strong>GPU:</strong> <?= $product['gpu'] ?></li>
+                <li><strong>Screen:</strong> <?= $product['screen'] ?></li>
+                <li><strong>OS:</strong> <?= $product['os'] ?></li>
+                <li><strong>Weight:</strong> <?= $product['weight'] ?></li>
+            </ul>
+
+           <!-- BUTTONS (COMPARE STYLE) -->
+<div class="row mt-4">
+    <div class="col">
+        <a href="produits.php" class="btn btn-outline-secondary w-100">
+            ⬅ Retour
+        </a>
+    </div>
+
+    <div class="col">
+        <form method="post" action="compare.php">
+            <input type="hidden" name="compare[]" value="<?= $product['id'] ?>">
+            <input type="hidden" name="criteres[]" value="1"> <!-- optional: you can add default criteres -->
+            <button type="submit" class="btn btn-success w-100">
+                ➕ Ajouter à comparaison
+            </button>
+        </form>
+    </div>
+</div>
+
+        </div>
+        </div>
+    </div>
+
+</div>
+</div>
+</section>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+  
+    <footer class="bg-dark" id="tempaltemo_footer">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-4 pt-5">
+                    <h2 class="h2 text-success border-bottom pb-3 border-light logo">computer Shop</h2>
+                    <ul class="list-unstyled text-light footer-link-list">
+                        <li>
+                            <i class="fas fa-map-marker-alt fa-fw"></i>
+                            123 Consectetur at ligula 10660
+                        </li>
+                        <li>
+                            <i class="fa fa-phone fa-fw"></i>
+                            <a class="text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+                        </li>
+                        <li>
+                            <i class="fa fa-envelope fa-fw"></i>
+                            <a class="text-decoration-none" href="mailto:info@company.com">info@company.com</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 pt-5">
+                    <h2 class="h2 text-light border-bottom pb-3 border-light">Products</h2>
+                    <ul class="list-unstyled text-light footer-link-list">
+                        <li><a class="text-decoration-none" href="../user/produits.php">Laptops</a></li>
+                        
+                      
+                    </ul>
+                </div>
+
+                <div class="col-md-4 pt-5">
+                    <h2 class="h2 text-light border-bottom pb-3 border-light">Further Info</h2>
+                    <ul class="list-unstyled text-light footer-link-list">
+                        <li><a class="text-decoration-none" href="../user/index.html">Home</a></li>
+                       
+                        <li><a class="text-decoration-none" href="../user/produits.php">Explore</a></li>
+                        
+                        
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="row text-light mb-4">
+                <div class="col-12 mb-3">
+                    <div class="w-100 my-3 border-top border-light"></div>
+                </div>
+                <div class="col-auto me-auto">
+                    <ul class="list-inline text-left footer-icons">
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/"><i class="fab fa-facebook-f fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank" href="https://www.instagram.com/"><i class="fab fa-instagram fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/"><i class="fab fa-twitter fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank" href="https://www.linkedin.com/"><i class="fab fa-linkedin fa-lg fa-fw"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-auto">
+                    <label class="sr-only" for="subscribeEmail">Email address</label>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control bg-dark border-light" id="subscribeEmail" placeholder="Email address">
+                        <div class="input-group-text btn-success text-light">Subscribe</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-100 bg-black py-3">
+            <div class="container">
+                <div class="row pt-2">
+                    <div class="col-12">
+                        <p class="text-left text-light">
+                            Copyright &copy; 2021 Computer
+                        
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+    <!-- End Footer -->
+
+    <!-- Start Script -->
+    <script src="assets/js/jquery-1.11.0.min.js"></script>
+    <script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/templatemo.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <!-- End Script -->
+</body>
+
+</html>
