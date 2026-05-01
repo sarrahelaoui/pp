@@ -55,13 +55,6 @@
 
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block">
-    <div class="container text-light">
-        info@company.com | 010-020-0340
-    </div>
-</nav>
-
 <nav class="navbar navbar-expand-lg navbar-light shadow">
     <div class="container">
         <a class="navbar-brand text-success h1" href="index.html">Computer</a>
@@ -259,11 +252,7 @@ echo "<h4 class='text-danger'>Aucun produit trouvé</h4>";
 <div class="container">
 <div class="row">
 
-<div class="col-md-4">
-<h2 class="text-success">Computer Shop</h2>
-<p>Email: info@company.com</p>
-<p>Phone: 010-020-0340</p>
-</div>
+
 
 <div class="col-md-4">
 <h2>Products</h2>
@@ -287,9 +276,6 @@ echo "<h4 class='text-danger'>Aucun produit trouvé</h4>";
 </div>
 </div>
 
-<div class="text-center py-3 bg-black">
-© 2026 Computer Shop
-</div>
 
 </footer>
 
